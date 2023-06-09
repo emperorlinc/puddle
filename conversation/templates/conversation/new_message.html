@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Conversation{% endblock title %}
+
+{% block content %}
+
+<div class="new-conversation-wrapper">
+    <h2>New conversation</h2>
+    <form action="." method="POST">
+        {% csrf_token %}
+    
+        {{ form.as_p }}
+        <button type="submit">Send</button>
+    </form>
+</div>
+
+{% endblock content %}

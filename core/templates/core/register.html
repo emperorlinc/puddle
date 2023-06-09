@@ -1,0 +1,40 @@
+{% extends 'core/base.html' %} {% block title %} Register {% endblock %} 
+
+{%block content %}
+
+<div class="register-wrapper">
+  <h2>Register</h2>
+  <form method="POST">
+    {% csrf_token %}
+    <div class="register-field-wrapper">
+      {{form.username}}
+    </div>
+
+    <div class="register-field-wrapper">
+      {{form.email}}
+    </div>
+
+    <div class="register-field-wrapper">
+      {{form.password1}}
+    </div>
+
+    <div class="register-field-wrapper">
+      {{form.password2}}
+    </div>
+
+    {% if form.errors or form.non_field_errors %}
+        <div class="error-messages">
+            {% for field in form %}
+                {{ field.errors}}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <button type="submit">Submit</button>
+    <div class="switch">
+        <p>You already have an account? <a href="{% url 'core:login' %}">Login</a></p>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

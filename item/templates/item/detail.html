@@ -1,0 +1,45 @@
+{% extends "core/base.html" %}
+
+{% block title %} {{ item.name }} {% endblock %}
+
+{% block content %}
+    <div class="detail-wrapper">
+        <div class="item-detail-image">
+            <img src="{{ item.image.url }}" >
+        </div>
+
+        <div class="item-detail-description">
+            <h3>{{ item.name }}</h3>
+            <p><strong>Price: </strong>{{ item.price }}</p>
+            <p><strong>Seller: </strong>{{ item.created_by.username }}</p>
+            {% if item.description %}
+            <p><strong>Description: </strong><br/>{{ item.description }}</p>
+            {% endif %}
+            
+            <div class="action-wrapper">
+                {% if request.user == item.created_by %}
+                    <p>This is your item.</p>
+                    <a class="edit" href="{% url 'item:edit' item.id %}">Edit</a>
+                    <a class="delete"href="{% url 'item:delete' item.id %}">Delete</a>
+                {% else %}
+                    <a class="edit" href="{% url 'conversation:new' item.id %}">Contact seller</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="item-wrapper">
+        <h2 class="heading">Related items</h2>
+        <div class="related-items">
+            {% for item in related_item %}
+                <div class="related-item">
+                    <a href="{% url 'item:detail' item.id %}">
+                        <div class="related-item-image">
+                            <img src="{{ item.image.url }}" alt="">
+                        </div>
+                        <h3>{{ item.name }}</h3>
+                    </div>
+            {% endfor %}
+            </div>
+        </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %} {% block title %} Login {% endblock %} 
+
+{%block content %}
+
+<div class="register-wrapper">
+  <h2>Login</h2>
+  <form method="POST">
+    {% csrf_token %}
+    <div class="login-field-wrapper">
+        <input class="login-field" type="text" name="username" placeholder="Username">
+    </div>
+
+    <div class="login-field-wrapper">
+        <input class="login-field" type="password" name="password" placeholder="Password">
+    </div>
+
+    {% if form.errors or form.non_field_errors %}
+        <div class="error-messages">
+            {% for field in form %}
+                {{ field.errors}}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <button type="submit">Login</button>
+    <div class="switch">
+        <p>You don't have an account? <a href="{% url 'core:register' %}">Register</a></p>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

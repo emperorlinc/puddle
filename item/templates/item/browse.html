@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Browse item{% endblock title %}
+
+{% block content %}
+<h2 class="header">Browse item</h2>
+<div class="browse-item-wrapper">
+    <div class="side-bar">
+        <h2>Side bar</h2>
+        <form action="{% url 'item:items' %}" method="get">
+            <input type="text" name="query" value="{{ query }}" placeholder="Find a bike, a chair or a car...">
+            <button class="submit-btn" type="submit">Search</button>
+        </form>
+        <hr>
+        <p>Categories</p>
+        
+        <ul>
+            {% for category in categories %}
+                <li {% if category.id == category_id %} style="background: wheat; border-radius: 5px;" {% endif %}>
+                    <a href="{% url 'item:items' %}?query={{ query }}&category={{ category.id }}" class="category-list">
+                        {{ category.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        
+        <hr>
+        <p>Clear filters</p>
+        <button class="clear-btn">
+            <a href="{% url 'item:items' %}">Clear</a>
+        </button>
+
+    </div>
+    <div class="browse-item">
+      {% for item in items %}
+      <div class="item">
+        <a href="{% url 'item:detail' item.id %}">
+          <div class="browse-item-image-wrapper">
+            <img src="{{ item.image.url }}" />
+          </div>
+          <div class="item-wrapper-detail">
+            <h2>{{ item.name }}</h2>
+            <p>Price: {{ item.price }}</p>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+</div>
+{% endblock content %}
